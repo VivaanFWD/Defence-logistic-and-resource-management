@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Requester Dashboard - Defense Logistics')}"></head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div th:replace="~{fragments/layout :: sidebar('dashboard')}"></div>
+
+        <div class="flex-grow-1 overflow-auto" style="height: 100vh;">
+            <header th:replace="~{fragments/layout :: header('Dashboard', ${currentUser})}"></header>
+
+            <div class="container-fluid px-4">
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                <!-- Status Summary Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #e9f2ff;">
+                            <div class="card-body text-center">
+                                <h6 class="text-primary mb-2 fw-medium">My Requests</h6>
+                                <div class="stat-value text-primary"
+                                     th:text="${dashboardStats.totalRequests}">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #fff3cd;">
+                            <div class="card-body text-center">
+                                <h6 class="mb-2 fw-medium" style="color: #d97706;">Pending</h6>
+                                <div class="stat-value"
+                                     style="color: #d97706;"
+                                     th:text="${dashboardStats.pending}">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #d1e7dd;">
+                            <div class="card-body text-center">
+                                <h6 class="text-success mb-2 fw-medium">Approved</h6>
+                                <div class="stat-value text-success"
+                                     th:text="${dashboardStats.approved}">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #e2d9f3;">
+                            <div class="card-body text-center">
+                                <h6 class="mb-2 fw-medium" style="color: #6f42c1;">Completed</h6>
+                                <div class="stat-value"
+                                     style="color: #6f42c1;"
+                                     th:text="${dashboardStats.completed}">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Recent Requests Table -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h6 class="mb-0 fw-bold">My Recent Requests</h6>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col" class="ps-4">ID</th>
+                                        <th scope="col">Request Type</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr th:each="req : ${myRequests}">
+                                        <td class="ps-4 text-muted"
+                                            th:text="${req.id}">REQ-001</td>
+
+                                        <td th:text="${req.type}">Vehicle & Equipment</td>
+
+                                        <td th:text="${req.date}">10-06-2025</td>
+
+                                        <td>
+                                            <span class="badge rounded-pill"
+                                                  th:classappend="${#strings.toUpperCase(req.status) == 'APPROVED' ? 'badge-active' : 
+                                                                   (#strings.toUpperCase(req.status) == 'PENDING' ? 'badge-pending' : 'bg-secondary')}"
+                                                  th:text="${req.status}">
+                                                Pending
+                                            </span>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <a th:href="@{/requester/requests/{id}/track(id=${req.id})}"
+                                               class="btn btn-primary btn-sm px-3">
+                                                View
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Empty state -->
+                                    <tr th:if="${#lists.isEmpty(myRequests)}">
+                                        <td colspan="5" class="text-center text-muted py-4">
+                                            You have not submitted any requests yet.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

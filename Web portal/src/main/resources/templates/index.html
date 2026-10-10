@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defense Logistics</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<!-- CSS STYLE -->
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1e293b;
+    background: #ffffff;
+}
+
+/* Navbar */
+.home-navbar {
+    background: #163b65;
+    padding: 18px 0;
+}
+
+.home-navbar .navbar-brand {
+    font-size: 19px;
+    letter-spacing: 0.5px;
+}
+
+/* Main section */
+.home-main {
+    min-height: calc(100vh - 130px);
+    padding: 65px 0 45px;
+    background: #f5f8fc;
+}
+
+.home-content {
+    padding: 25px 0 45px;
+}
+
+.home-label {
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.home-content h1 {
+    color: #163b65;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 22px;
+}
+
+.home-description {
+    max-width: 620px;
+    color: #64748b;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+}
+
+/* Buttons */
+.home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.home-button {
+    padding: 11px 23px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+/* Feature sections */
+.home-features {
+    margin-top: 20px;
+}
+
+.feature-item {
+    height: 100%;
+    padding: 23px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid;
+    border-radius: 5px;
+}
+
+.feature-item h5 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.feature-blue {
+    border-left-color: #2563eb;
+}
+
+.feature-blue h5 {
+    color: #2563eb;
+}
+
+.feature-green {
+    border-left-color: #16a34a;
+}
+
+.feature-green h5 {
+    color: #16a34a;
+}
+
+.feature-orange {
+    border-left-color: #d97706;
+}
+
+.feature-orange h5 {
+    color: #d97706;
+}
+
+/* Footer */
+.home-footer {
+    padding: 20px 15px;
+    text-align: center;
+    color: #dbeafe;
+    background: #163b65;
+    font-size: 13px;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .home-main {
+        padding-top: 35px;
+    }
+
+    .home-content {
+        padding-bottom: 25px;
+    }
+
+    .home-content h1 {
+        font-size: 34px;
+    }
+
+    .home-description {
+        font-size: 15px;
+    }
+}
+
+</style>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark home-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}">
+                DEFENSE LOGISTICS
+            </a>
+
+            <a class="btn btn-outline-light btn-sm"
+               th:href="@{/login}">
+                Login
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Home Section -->
+    <main class="home-main">
+        <div class="container">
+            <section class="home-content">
+
+                <!-- Title -->
+                <p class="home-label">DEFENSE RESOURCE MANAGEMENT</p>
+
+                <!-- Heading -->
+                <h1>
+                    Managing Resources.<br>
+                    Supporting Operations.
+                </h1>
+
+                <!-- Description -->
+                <p class="home-description">
+                    A centralized platform to manage personnel, vehicles,
+                    equipment, and logistics resources efficiently.
+                </p>
+
+                <!-- Buttomns -->
+                <div class="home-actions">
+                    <!-- Get Start -->
+                    <a th:href="@{/login}" class="btn btn-primary home-button">
+                        Get Started
+                    </a>
+                    <!-- Learn More -->
+                    <a href="#about" class="btn btn-outline-primary home-button">
+                        Learn More
+                    </a>
+                </div>
+
+            </section>
+
+            <!-- information row -->
+            <section class="row g-3 home-features" id="about">
+
+                <!-- Resource Service -->
+                <div class="col-12 col-md-3">
+                    <div class="feature-item feature-blue">
+                        <h5>Resource Service</h5>
+                        <p>.</p>
+                    </div>
+                </div>
+
+                <!-- Logistics Services -->
+                <div class="col-12 col-md-3">
+                    <div class="feature-item feature-orange">
+                    <h5>Logistics Services</h5>
+                        <p>.</p>
+                    </div>
+                </div>
+
+                <!-- Inventory Services -->
+                <div class="col-12 col-md-3">
+                    <div class="feature-item feature-orange">
+                        <h5>Inventory Service</h5> 
+                        <p>.</p>
+                    </div>
+                </div>
+
+                <!-- Maintainance Service -->
+                <div class="col-12 col-md-3">
+                    <div class="feature-item feature-blue">
+                        <h5>Maintainance Service</h5>
+                        <p>.</p>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+        Defense Logistics Management System
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Resource Allocation - Defense Logistics')}"></head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div th:replace="~{fragments/layout :: sidebar('allocate_resources')}"></div>
+
+        <div class="flex-grow-1 overflow-auto" style="height: 100vh;">
+            <header th:replace="~{fragments/layout :: header('Resource Allocation', ${currentUser})}"></header>
+
+            <div class="container-fluid px-4">
+                
+                <h5 class="mb-4 fw-bold text-dark">Allocate Vehicles</h5>
+
+                <form th:action="@{/logistics/requests/{id}/allocate/confirm(id=${requestId ?: 'REQ-001'})}" method="post">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col" class="ps-4">Vehicle No</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Location</th>
+                                            <th scope="col" class="text-center">Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="vehicle : ${availableVehicles}">
+                                            <td class="ps-4 fw-medium" th:text="${vehicle.vehicleNo}">DEF-101</td>
+                                            <td th:text="${vehicle.type}">Truck</td>
+                                            <td><span class="badge badge-active rounded-pill" th:text="${vehicle.status}">Available</span></td>
+                                            <td th:text="${vehicle.location}">Base-1</td>
+                                            <td class="text-center">
+                                                <input class="form-check-input" type="checkbox" name="selectedVehicles" th:value="${vehicle.id}">
+                                            </td>
+                                        </tr>
+                                        
+                                        <!-- Fallback static rows -->
+                                        <tr th:if="${availableVehicles == null}">
+                                            <td class="ps-4 fw-medium">DEF-101</td>
+                                            <td>Truck</td>
+                                            <td><span class="badge badge-active rounded-pill">Available</span></td>
+                                            <td>Base-1</td>
+                                            <td class="text-center">
+                                                <input class="form-check-input" type="checkbox" checked>
+                                            </td>
+                                        </tr>
+                                        <tr th:if="${availableVehicles == null}">
+                                            <td class="ps-4 fw-medium">DEF-104</td>
+                                            <td>Truck</td>
+                                            <td><span class="badge badge-active rounded-pill">Available</span></td>
+                                            <td>Base-2</td>
+                                            <td class="text-center">
+                                                <input class="form-check-input" type="checkbox">
+                                            </td>
+                                        </tr>
+                                        <tr th:if="${availableVehicles == null}">
+                                            <td class="ps-4 fw-medium">DEF-105</td>
+                                            <td>Jeep</td>
+                                            <td><span class="badge badge-active rounded-pill">Available</span></td>
+                                            <td>Base-1</td>
+                                            <td class="text-center">
+                                                <input class="form-check-input" type="checkbox">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end pb-4">
+                        <button type="submit" class="btn btn-primary px-4">Confirm Allocation</button>
+                    </div>
+                </form>
+
+            </div> 
+        </div> 
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

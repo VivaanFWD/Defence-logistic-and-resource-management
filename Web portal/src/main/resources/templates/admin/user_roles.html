@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('User Types & Access Matrix - Defence Logistics')}"></head>
+<body><div class="app-layout d-flex">
+  <div th:replace="~{fragments/layout :: sidebar('roles')}"></div>
+  <main class="main-content flex-grow-1">
+    <header th:replace="~{fragments/layout :: header('User Types & Access Matrix', ${currentUser})}"></header>
+    <div class="container-fluid px-4 pb-5">
+      <div class="alert alert-warning"><i class="bi bi-shield-exclamation me-2"></i>This is the proposed role matrix for the web UI. Enforce every permission in the identity/security layer and the domain microservices before production; hiding a link is not authorization.</div>
+      <div class="card border-0 shadow-sm"><div class="card-body p-0"><div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light"><tr><th class="ps-4">Role</th><th>Code</th><th>Intended user</th><th>Permitted activities</th><th>Data boundary</th></tr></thead>
+          <tbody><tr th:each="role : ${roles}"><td class="ps-4 fw-semibold" th:text="${role.name}">Role</td><td><code th:text="${role.code}">ROLE</code></td><td th:text="${role.audience}">Audience</td><td th:text="${role.permissions}">Permissions</td><td th:text="${role.boundary}">Boundary</td></tr></tbody>
+        </table>
+      </div></div></div>
+      <div class="mt-4 small text-secondary">Suggested defence-domain naming: <strong>Quartermaster / Unit Personnel</strong> is used in place of the generic “customer” role because this user requests supplies and tracks unit logistics.</div>
+    </div>
+  </main>
+</div><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script></body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Request Details - Defense Logistics')}"></head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div th:replace="~{fragments/layout :: sidebar('requests')}"></div>
+
+        <div class="flex-grow-1 overflow-auto" style="height: 100vh;">
+            <header th:replace="~{fragments/layout :: header('Request Details', ${currentUser})}"></header>
+
+            <div class="container-fluid px-4">
+                
+                <div class="d-flex align-items-center mb-4">
+                    <h5 class="mb-0 fw-bold text-dark me-3" th:text="'Request Details - ' + (${request != null} ? ${request.id} : 'REQ-001')">Request Details - REQ-001</h5>
+                    <span class="badge badge-pending rounded-pill">Pending</span>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Request Info Column -->
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body">
+                                <table class="table table-borderless mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-muted w-25">Requested By:</th>
+                                            <td th:text="${request?.requestedBy ?: 'Unit A'}">Unit A</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted">Request Type:</th>
+                                            <td th:text="${request?.type ?: 'Vehicle & Equipment'}">Vehicle & Equipment</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted">Purpose:</th>
+                                            <td th:text="${request?.purpose ?: 'Field training exercise'}">Field training exercise</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted">Request Date:</th>
+                                            <td th:text="${request?.requestDate ?: '10-06-2025'}">10-06-2025</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted">Required From:</th>
+                                            <td th:text="${request?.requiredFrom ?: '12-06-2025'}">12-06-2025</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted">Required To:</th>
+                                            <td th:text="${request?.requiredTo ?: '15-06-2025'}">15-06-2025</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Requested Items Column -->
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-header bg-white py-3 border-bottom-0">
+                                <h6 class="mb-0 fw-bold">Requested Items</h6>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Item</th>
+                                                <th class="text-center">Quantity</th>
+                                                <th>Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="item : ${request?.items}">
+                                                <td th:text="${item.name}">Truck</td>
+                                                <td class="text-center" th:text="${item.quantity}">2</td>
+                                                <td th:text="${item.type}">Vehicle</td>
+                                            </tr>
+                                            <!-- Fallback static rows -->
+                                            <tr th:if="${request == null}">
+                                                <td>Truck</td><td class="text-center">2</td><td>Vehicle</td>
+                                            </tr>
+                                            <tr th:if="${request == null}">
+                                                <td>Generator</td><td class="text-center">1</td><td>Equipment</td>
+                                            </tr>
+                                            <tr th:if="${request == null}">
+                                                <td>Tent</td><td class="text-center">10</td><td>Equipment</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-4 pb-4">
+                    <form th:action="@{/logistics/requests/{id}/process(id=${request?.id ?: 'REQ-001'})}" method="post" class="d-flex gap-2">
+                        <button type="submit" name="action" value="approve" class="btn btn-success px-4">Approve</button>
+                        <button type="submit" name="action" value="reject" class="btn btn-danger px-4">Reject</button>
+                        <!-- Assuming 'Allocate Resources' goes to the allocation page -->
+                        <a th:href="@{/logistics/requests/{id}/allocate(id=${request?.id ?: 'REQ-001'})}" class="btn btn-primary px-4 ms-2">Allocate Resources</a>
+                    </form>
+                </div>
+
+            </div> 
+        </div> 
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

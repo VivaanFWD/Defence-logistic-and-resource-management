@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Access Accounts - Defence Logistics')}"></head>
+<body>
+<div class="d-flex">
+  <div th:replace="~{fragments/layout :: sidebar('accounts')}"></div>
+  <main class="flex-grow-1 min-vh-100">
+    <header th:replace="~{fragments/layout :: header('Authentication Accounts', ${currentUser})}"></header>
+    <div class="container-fluid px-4 pb-5">
+      <div class="alert alert-info"><i class="bi bi-shield-lock me-2"></i>These accounts belong to the web application's authentication database. Domain users and logistics records remain owned by the four microservices.</div>
+      <div class="card border-0 shadow-sm"><div class="card-body p-0"><div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light"><tr><th class="ps-4">Account</th><th>Email</th><th>Role</th><th>Status</th><th class="text-end pe-4">Actions</th></tr></thead>
+          <tbody>
+          <tr th:each="account : ${accounts}">
+            <td class="ps-4"><div class="fw-semibold" th:text="${account.fullName}">Name</div><div class="small text-secondary" th:text="${account.username}">@username</div></td>
+            <td th:text="${account.email}">email</td>
+            <td><form th:action="@{/admin/accounts/{id}/role(id=${account.id})}" method="post" class="d-flex gap-2"><select name="role" class="form-select form-select-sm" aria-label="Account role"><option value="ADMIN" th:selected="${account.role == 'ADMIN'}">Administrator</option><option value="LOGISTIC_OFFICER" th:selected="${account.role == 'LOGISTIC_OFFICER'}">Logistics Officer</option><option value="QUARTERMASTER" th:selected="${account.role == 'QUARTERMASTER'}">Quartermaster</option></select><button class="btn btn-sm btn-outline-primary" type="submit">Save</button></form></td>
+            <td><span class="badge" th:classappend="${account.enabled ? ' text-bg-success' : ' text-bg-secondary'}" th:text="${account.enabled ? 'Enabled' : 'Disabled'}">Enabled</span></td>
+            <td class="text-end pe-4"><form th:action="@{/admin/accounts/{id}/status(id=${account.id})}" method="post"><input type="hidden" name="enabled" th:value="${!account.enabled}"><button class="btn btn-sm" th:classappend="${account.enabled ? ' btn-outline-danger' : ' btn-outline-success'}" type="submit" th:text="${account.enabled ? 'Disable' : 'Enable'}">Disable</button></form></td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(accounts)}"><td colspan="5" class="text-center text-secondary py-5">No accounts found. Configure bootstrap administrator credentials or register a requester account.</td></tr>
+          </tbody>
+        </table>
+      </div></div></div>
+    </div>
+  </main>
+</div>
+</body></html>

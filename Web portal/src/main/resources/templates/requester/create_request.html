@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Create Logistics Request - Defense Logistics')}"></head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div th:replace="~{fragments/layout :: sidebar('create_request')}"></div>
+
+        <div class="flex-grow-1 overflow-auto" style="height: 100vh;">
+            <header th:replace="~{fragments/layout :: header('Create Logistics Request', ${currentUser})}"></header>
+
+            <div class="container-fluid px-4">
+                
+                <div class="card shadow-sm border-0 mb-4" style="max-width: 800px;">
+                    <div class="card-body p-4">
+                        <form th:action="@{/requester/requests/create}" method="post" th:object="${newRequest}">
+                            
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium text-muted small">Request Type</label>
+                                    <select class="form-select" name="requestType" required>
+                                        <option value="Vehicle & Equipment">Vehicle & Equipment</option>
+                                        <option value="Personnel">Personnel</option>
+                                        <option value="Supplies">Supplies</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium text-muted small">Purpose</label>
+                                    <input type="text" class="form-control" name="purpose" placeholder="e.g., Field training exercise at Sector 5" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium text-muted small">Required From</label>
+                                    <input type="date" class="form-control" name="requiredFrom" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium text-muted small">Required To</label>
+                                    <input type="date" class="form-control" name="requiredTo" required>
+                                </div>
+                            </div>
+
+                            <h6 class="fw-bold mb-3">Select Required Items</h6>
+                            <div class="bg-light p-3 rounded mb-4">
+                                <!-- Vehicle Selection Row -->
+                                <div class="row g-3 align-items-center mb-3">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkVehicle" name="items[0].selected" checked>
+                                            <label class="form-check-label fw-medium" for="checkVehicle">Vehicle</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-center">
+                                        <label class="me-2 text-muted small mb-0">Quantity:</label>
+                                        <input type="number" class="form-control form-control-sm w-50" name="items[0].quantity" value="2">
+                                    </div>
+                                    <div class="col-md-5 d-flex align-items-center">
+                                        <label class="me-2 text-muted small mb-0">Type:</label>
+                                        <select class="form-select form-select-sm" name="items[0].type">
+                                            <option value="Truck">Truck</option>
+                                            <option value="Jeep">Jeep</option>
+                                            <option value="Bus">Bus</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Equipment Selection Row -->
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkEquipment" name="items[1].selected" checked>
+                                            <label class="form-check-label fw-medium" for="checkEquipment">Equipment</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-center">
+                                        <label class="me-2 text-muted small mb-0">Quantity:</label>
+                                        <input type="number" class="form-control form-control-sm w-50" name="items[1].quantity" value="1">
+                                    </div>
+                                    <div class="col-md-5 d-flex align-items-center">
+                                        <label class="me-2 text-muted small mb-0">Type:</label>
+                                        <select class="form-select form-select-sm" name="items[1].type">
+                                            <option value="Generator">Generator</option>
+                                            <option value="Tent">Tent</option>
+                                            <option value="Medical Kit">Medical Kit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary px-4">Submit Request</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div> 
+        </div> 
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

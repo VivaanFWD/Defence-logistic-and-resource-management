@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Include the shared head fragment -->
+<head th:replace="~{fragments/layout :: head('User Management - Defense Logistics')}"></head>
+
+<body>
+    <div class="d-flex">
+        <!-- Include Sidebar Fragment, passing 'users' as the active menu item -->
+        <div th:replace="~{fragments/layout :: sidebar('users')}"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 overflow-auto" style="height: 100vh;">
+            
+            <!-- Include Header Fragment -->
+            <header th:replace="~{fragments/layout :: header('User Management', ${currentUser})}"></header>
+
+            <div class="container-fluid px-4">
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                
+                <!-- Page Header with Action Button -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="mb-0 fw-bold text-dark">User Management</h5>
+                    <!-- Button to open add user modal or navigate to add user form -->
+                    <a th:href="@{/admin/users/add}" class="btn btn-primary btn-sm px-3">
+                        <i class="bi bi-plus-lg me-1"></i> Add User
+                    </a>
+                </div>
+
+                <!-- Users Data Table Card -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col" class="ps-4">ID</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Thymeleaf Iteration over 'userList' -->
+                                    <tr th:each="user : ${userList}">
+                                        <td class="ps-4 text-muted" th:text="${user.id}">1</td>
+                                        <td class="fw-medium" th:text="${user.username}">admin</td>
+                                        <td th:text="${user.role}">ADMIN</td>
+                                        <td>
+                                            <!-- Dynamic Badge based on status -->
+                                            <span class="badge rounded-pill" 
+                                                  th:classappend="${user.status == 'Active' ? 'badge-active' : 'bg-secondary'}"
+                                                  th:text="${user.status}">Active</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-primary btn-sm">
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Fallback static rows for UI testing if 'userList' is null (matches image.png) -->
+                                    <tr th:if="${userList == null}">
+                                        <td class="ps-4 text-muted">1</td>
+                                        <td class="fw-medium">admin</td>
+                                        <td>ADMIN</td>
+                                        <td><span class="badge rounded-pill badge-active">Active</span></td>
+                                        <td class="text-center"><button class="btn btn-primary btn-sm px-3">Edit</button></td>
+                                    </tr>
+                                    <tr th:if="${userList == null}">
+                                        <td class="ps-4 text-muted">2</td>
+                                        <td class="fw-medium">officer1</td>
+                                        <td>LOGISTICS_OFFICER</td>
+                                        <td><span class="badge rounded-pill badge-active">Active</span></td>
+                                        <td class="text-center"><button class="btn btn-primary btn-sm px-3">Edit</button></td>
+                                    </tr>
+                                    <tr th:if="${userList == null}">
+                                        <td class="ps-4 text-muted">3</td>
+                                        <td class="fw-medium">requester1</td>
+                                        <td>REQUESTER</td>
+                                        <td><span class="badge rounded-pill badge-active">Active</span></td>
+                                        <td class="text-center"><button class="btn btn-primary btn-sm px-3">Edit</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+        </div> 
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

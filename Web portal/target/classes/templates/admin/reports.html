@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Reports - Defense Logistics')}"></head>
+
+<body>
+    <div class="d-flex">
+        <!-- Include Sidebar Fragment, passing 'reports' as the active menu item -->
+        <div th:replace="~{fragments/layout :: sidebar('reports')}"></div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 overflow-auto" style="height: 100vh;">
+            
+            <header th:replace="~{fragments/layout :: header('Reports Page', ${currentUser})}"></header>
+
+            <div class="container-fluid px-4">
+                
+                <h5 class="mb-4 fw-bold text-dark">Resource Availability Report</h5>
+
+                <!-- Filter Section -->
+                <div class="card shadow-sm border-0 mb-4 bg-light">
+                    <div class="card-body">
+                        <form th:action="@{/admin/reports}" method="get" class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label text-muted small fw-bold">Type</label>
+                                <select name="type" class="form-select form-select-sm">
+                                    <option value="All">All</option>
+                                    <option value="Vehicles">Vehicles</option>
+                                    <option value="Equipment">Equipment</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label text-muted small fw-bold">Status</label>
+                                <select name="status" class="form-select form-select-sm">
+                                    <option value="All">All</option>
+                                    <option value="Available">Available</option>
+                                    <option value="In Use">In Use</option>
+                                    <option value="Maintenance">Maintenance</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary btn-sm w-100">Generate</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Report Data Table Card -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col" class="ps-4">Resource Type</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Available</th>
+                                        <th scope="col">In Use</th>
+                                        <th scope="col">Maintenance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Thymeleaf Iteration over 'reportData' -->
+                                    <tr th:each="row : ${reportData}">
+                                        <td class="ps-4 fw-medium text-dark" th:text="${row.resourceType}">Vehicles</td>
+                                        <td th:text="${row.total}">68</td>
+                                        <td class="text-success fw-medium" th:text="${row.available}">50</td>
+                                        <td class="text-warning fw-medium" th:text="${row.inUse}">15</td>
+                                        <td class="text-danger fw-medium" th:text="${row.maintenance}">3</td>
+                                    </tr>
+                                    
+                                    <!-- Fallback static rows for UI testing if 'reportData' is null -->
+                                    <tr th:if="${reportData == null}">
+                                        <td class="ps-4 fw-medium text-dark">Vehicles</td>
+                                        <td>68</td>
+                                        <td class="text-success fw-medium">50</td>
+                                        <td class="text-warning fw-medium">15</td>
+                                        <td class="text-danger fw-medium">3</td>
+                                    </tr>
+                                    <tr th:if="${reportData == null}">
+                                        <td class="ps-4 fw-medium text-dark">Equipment</td>
+                                        <td>320</td>
+                                        <td class="text-success fw-medium">280</td>
+                                        <td class="text-warning fw-medium">30</td>
+                                        <td class="text-danger fw-medium">10</td>
+                                    </tr>
+                                    <tr th:if="${reportData == null}">
+                                        <td class="ps-4 fw-medium text-dark">Personnel</td>
+                                        <td>245</td>
+                                        <td class="text-success fw-medium">220</td>
+                                        <td class="text-warning fw-medium">20</td>
+                                        <td class="text-danger fw-medium">5</td>
+                                    </tr>
+                                    <tr th:if="${reportData == null}">
+                                        <td class="ps-4 fw-medium text-dark">Inventory Items</td>
+                                        <td>1250</td>
+                                        <td class="text-success fw-medium">1100</td>
+                                        <td class="text-warning fw-medium">100</td>
+                                        <td class="text-danger fw-medium">50</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+        </div> 
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

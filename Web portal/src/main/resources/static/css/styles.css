@@ -1,0 +1,129 @@
+:root {
+  /* Brand Colors */
+  --primary-dark: #1e293b; /* Sidebar background */
+  --primary-blue: #0d6efd;
+  --bg-light: #f8f9fa;
+  --text-dark: #333333;
+  --text-muted: #6c757d;
+
+  /* Status Colors */
+  --status-active-bg: #d1e7dd;
+  --status-active-text: #0f5132;
+  --status-pending-bg: #fff3cd;
+  --status-pending-text: #856404;
+  --status-maintenance-bg: #f8d7da;
+  --status-maintenance-text: #842029;
+}
+
+body {
+  background-color: var(--bg-light);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  background-color: var(--primary-dark);
+  min-height: 100vh;
+  color: white;
+}
+
+.sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .navbar-brand {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card Styles */
+.stat-card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border-radius: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Badges */
+.badge-active {
+  background-color: var(--status-active-bg);
+  color: var(--status-active-text);
+}
+.badge-pending {
+  background-color: var(--status-pending-bg);
+  color: var(--status-pending-text);
+}
+.badge-maintenance {
+  background-color: var(--status-maintenance-bg);
+  color: var(--status-maintenance-text);
+}
+
+/* Login Page Specific */
+.login-bg {
+  background: url("https://images.unsplash.com/photo-1595085375239-014c27419e5d?auto=format&fit=crop&q=80")
+    center/cover no-repeat;
+  min-height: 100vh;
+}
+/* Responsive shell refinements */
+.app-layout {
+  min-height: 100vh;
+}
+.main-content {
+  min-width: 0;
+}
+.sidebar {
+  width: 260px;
+  flex: 0 0 260px;
+}
+.sidebar .nav-link {
+  padding: 0.7rem 0.85rem;
+}
+.card {
+  border-radius: 0.8rem;
+}
+.table > :not(caption) > * > * {
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+@media (max-width: 767.98px) {
+  .app-layout,
+  body > .d-flex {
+    display: block !important;
+  }
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+  .sidebar .navbar-brand {
+    padding: 0.6rem 0.5rem 1rem;
+  }
+  .sidebar .nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+  .sidebar .nav-link {
+    font-size: 0.9rem;
+  }
+  .topbar {
+    gap: 1rem;
+  }
+  .topbar h4 {
+    font-size: 1.05rem;
+  }
+}

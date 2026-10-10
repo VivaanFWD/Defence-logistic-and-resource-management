@@ -1,0 +1,13 @@
+com\defence\logistics\config\BootstrapAdmin.class
+com\defence\logistics\service\MicroserviceClient$1.class
+com\defence\logistics\controller\AccountAdminController.class
+com\defence\logistics\config\GlobalModelAdvice.class
+com\defence\logistics\config\SecurityConfig.class
+com\defence\logistics\auth\service\AccountService.class
+com\defence\logistics\controller\AdminController.class
+com\defence\logistics\service\MicroserviceClient.class
+com\defence\logistics\auth\repository\AppUserRepository.class
+com\defence\logistics\auth\entity\AppUser.class
+com\defence\logistics\auth\service\AccountAdminService.class
+com\defence\logistics\service\MicroserviceClient$ServiceName.class
+com\defence\logistics\LogisticsApplication.class

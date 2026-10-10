@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Logistics Officer Dashboard - Defense Logistics')}"></head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar for Logistics Officer (Assuming similar structure, passed 'dashboard' as active) -->
+        <div th:replace="~{fragments/layout :: sidebar('dashboard')}"></div>
+
+        <div class="flex-grow-1 overflow-auto" style="height: 100vh;">
+            
+            <!-- Header for Logistics Officer -->
+            <header th:replace="~{fragments/layout :: header('Dashboard', ${currentUser})}"></header>
+
+            <div class="container-fluid px-4">
+                <div th:if="${integrationNote}" class="alert alert-info py-2" th:text="${integrationNote}"></div>
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                
+                <!-- Status Summary Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #fbd5ce;"> <!-- Custom light orange from image -->
+                            <div class="card-body text-center">
+                                <h6 class="text-dark mb-2 fw-medium">Pending Requests</h6>
+                                <div class="stat-value text-dark" th:text="${dashboardStats.pendingRequests}">8</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #d1e7dd;"> <!-- Success light green -->
+                            <div class="card-body text-center">
+                                <h6 class="text-dark mb-2 fw-medium">Approved</h6>
+                                <div class="stat-value text-dark" th:text="${dashboardStats.approvedToday}">5</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #cff4fc;"> <!-- Info light blue -->
+                            <div class="card-body text-center">
+                                <h6 class="text-dark mb-2 fw-medium">In Progress</h6>
+                                <div class="stat-value text-dark" th:text="${dashboardStats.inProgress}">6</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card" style="background-color: #e2d9f3;"> <!-- Purple light -->
+                            <div class="card-body text-center">
+                                <h6 class="text-dark mb-2 fw-medium">Completed</h6>
+                                <div class="stat-value text-dark" th:text="${dashboardStats.completed}">24</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Requests Table -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h6 class="mb-0 fw-bold">Pending Requests</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col" class="ps-4">ID</th>
+                                        <th scope="col">Request Type</th>
+                                        <th scope="col">Requested By</th>
+                                        <th scope="col">Date <i class="bi bi-arrow-down-short"></i></th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="req : ${pendingRequests}">
+                                        <td class="ps-4 text-muted" th:text="${req.id}">REQ-001</td>
+                                        <td th:text="${req.type}">Vehicle</td>
+                                        <td th:text="${req.requestedBy}">Unit A</td>
+                                        <td th:text="${req.date}">10-06-2025</td>
+                                        <td><span class="badge badge-pending rounded-pill" th:text="${req.status}">Pending</span></td>
+                                        <td class="text-center">
+                                            <a th:href="@{/logistics/requests/{id}(id=${req.id})}" class="btn btn-primary btn-sm px-3">View</a>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Fallback static rows -->
+                                    <tr th:if="${pendingRequests == null}">
+                                        <td class="ps-4 text-muted">REQ-001</td>
+                                        <td>Vehicle</td>
+                                        <td>Unit A</td>
+                                        <td>10-06-2025</td>
+                                        <td><span class="badge badge-pending rounded-pill">Pending</span></td>
+                                        <td class="text-center"><a href="#" class="btn btn-primary btn-sm px-3">View</a></td>
+                                    </tr>
+                                    <tr th:if="${pendingRequests == null}">
+                                        <td class="ps-4 text-muted">REQ-002</td>
+                                        <td>Equipment</td>
+                                        <td>Unit B</td>
+                                        <td>10-06-2025</td>
+                                        <td><span class="badge badge-pending rounded-pill">Pending</span></td>
+                                        <td class="text-center"><a href="#" class="btn btn-primary btn-sm px-3">View</a></td>
+                                    </tr>
+                                    <tr th:if="${pendingRequests == null}">
+                                        <td class="ps-4 text-muted">REQ-003</td>
+                                        <td>Personnel</td>
+                                        <td>Unit C</td>
+                                        <td>09-06-2025</td>
+                                        <td><span class="badge badge-pending rounded-pill">Pending</span></td>
+                                        <td class="text-center"><a href="#" class="btn btn-primary btn-sm px-3">View</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+        </div> 
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
